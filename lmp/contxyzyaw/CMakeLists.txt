@@ -14,7 +14,6 @@ set(HEADERS_XYZYAW
 
 
 set(SRCS
-#src/embedded_multi_heuristics.cpp
 src/environment_xyzyaw.cpp
 )
 

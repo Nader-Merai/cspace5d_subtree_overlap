@@ -160,7 +160,7 @@ void ReadinStartGoal(char* SGFilename, std::vector<double> &startgoal){
 }
 
  //ARA
-void planxythetalat(char* envCfgFilename, char* envStlFilename, char* SGFilename, char* mode, char* radius){
+void planxythetalat(char* envCfgFilename, char* envStlFilename, char* SGFilename, char* mode){
     // set the perimeter of the robot
     vector<sbpl_2Dpt_t> perimeter;
     createFootprint(perimeter);
@@ -171,7 +171,7 @@ void planxythetalat(char* envCfgFilename, char* envStlFilename, char* SGFilename
     // continuousspace environment
     EnvironmentCONTXYZYAW env;
     env.mode = atoi(mode);
-    env.SetupR(atof(radius));
+    env.SetupR(0.06);
     initializeEnv(env, perimeter, envCfgFilename, envStlFilename);
 
     ReadinStartGoal(SGFilename, startgoal);
@@ -221,5 +221,5 @@ void planxythetalat(char* envCfgFilename, char* envStlFilename, char* SGFilename
 
 int main(int argc, char *argv[])
 {   
-    planxythetalat(argv[1], argv[2], argv[3], argv[4], argv[5]);
+    planxythetalat(argv[1], argv[2], argv[3], argv[4]);
 }
