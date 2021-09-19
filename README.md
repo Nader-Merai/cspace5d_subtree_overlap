@@ -1,5 +1,5 @@
 
-# X,Y,Z,$\theta$,V planning in continuous space with soft duplicate detection using subtree overlap.
+# X,Y,Z,theta,V planning in continuous space with soft duplicate detection using subtree overlap.
 
 ### About soft duplicate detection
 Please refer to this paper: 
