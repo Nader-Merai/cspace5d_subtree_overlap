@@ -461,9 +461,8 @@ protected:
 public:
     EnvCONTXYZYAWConfig_t EnvCONTXYZYAWCfg;
     int mode;
+	int produce_hash_table;
     int labeler_expansions;
-    std::ofstream new_data_form;
-    std::ofstream new_labels_form;
     double labeler_hash[7][7][7][21][5][5];
 
 

@@ -166,8 +166,6 @@ EnvironmentCONTXYZYAW::~EnvironmentCONTXYZYAW(){
     if( nullptr != kdtree ){
         delete kdtree;
     }
-    new_data_form.close();
-    new_labels_form.close();
 
 }       // destructor 
 
@@ -1208,40 +1206,72 @@ double EnvironmentCONTXYZYAW::SubtreeOverlapNewRatio(std::vector<double> first_s
 
 
 void EnvironmentCONTXYZYAW::BuildHashTable() {
-    // Hash Table Generation
-    // std::string filename = "Hash_Features.csv";
-    // new_data_form.open(filename);
-    // filename = "Hash_Labels.csv";
-    // new_labels_form.open(filename);
+    std::string hash_table_file_name = "Hash_Table_Values.txt";
+	if (produce_hash_table)
+	{
+		std::ofstream hash_stream;
+        hash_stream.open(hash_table_file_name);
+		for(int x = 0; x < 7; x++)
+		{
+			for(int y = 0; y < 7; y++)
+			{
+				for(int z = 0; z < 7; z++)
+				{
+					for(int yaw = 0; yaw < 21; yaw++)
+					{
+						for(int v1 = 0; v1 < 5; v1++)
+						{
+							for(int v2 = 0; v2 < 5; v2++)
+							{
+								std::vector<double> first_state = {1.0,1.0,1.0, 0, 0.0285 + v1*VXY_DISC, 0, 0};
+								std::vector<double> second_state = {1-(3-x)*COORD_DISC, 1-(3-y)*COORD_DISC,1-(3-z)*COORD_DISC, yaw*YAW_DISC, 0.0285 + v2*VXY_DISC, 0, 0};
+								labeler_hash[x][y][z][yaw][v1][v2] = SubtreeOverlapNewRatio(first_state, second_state);
+								hash_stream << labeler_hash[x][y][z][yaw][v1][v2] << "\n" << std::flush;
+							}
+						}
+					}
+				}
+			}
+		}
+		hash_stream.close();
+	}
+	else
+	{
+		std::filebuf fb_h;
+		if (fb_h.open(hash_table_file_name.c_str(),std::ios::in))
+		{
+            std::istream hash_stream(&fb_h);
+			for(int x = 0; x < 7; x++)
+			{
+				for(int y = 0; y < 7; y++)
+				{
+					for(int z = 0; z < 7; z++)
+					{
+						for(int yaw = 0; yaw < 21; yaw++)
+						{
+							for(int v1 = 0; v1 < 5; v1++)
+							{
+								for(int v2 = 0; v2 < 5; v2++)
+								{
+									// Used for reading the hash table from a file
+									std::string line;
+									std::getline(hash_stream,line);
+									labeler_hash[x][y][z][yaw][v1][v2]  = std::stod(line);
+								}
+							}
+						}
+					}
+				}
+			}
+			fb_h.close();
+		}
+		else
+		{
+			std::cout << "Cannot Read Hash Table File - File Doesn't Exist. File Must Be Named: " << hash_table_file_name << std::endl << std::flush;
+			exit(0);
+		}
+	}
     
-    for(int x = 0; x < 7; x++)
-    {
-        for(int y = 0; y < 7; y++)
-        {
-            for(int z = 0; z < 7; z++)
-            {
-                for(int yaw = 0; yaw < 21; yaw++)
-                {
-                    for(int v1 = 0; v1 < 5; v1++)
-                    {
-                        for(int v2 = 0; v2 < 5; v2++)
-                        {
-                            // new_data_form << x << ",";
-                            // new_data_form << y << ",";
-                            // new_data_form << z << ",";
-                            // new_data_form << yaw << ",";
-                            // new_data_form << v1 << ",";
-                            // new_data_form << v2 << "\n";
-                            std::vector<double> first_state = {1.0,1.0,1.0, 0, 0.0285 + v1*VXY_DISC, 0, 0};
-                            std::vector<double> second_state = {1-(3-x)*COORD_DISC, 1-(3-y)*COORD_DISC,1-(3-z)*COORD_DISC, yaw*YAW_DISC, 0.0285 + v2*VXY_DISC, 0, 0};
-                            labeler_hash[x][y][z][yaw][v1][v2] = SubtreeOverlapNewRatio(first_state, second_state);
-                            // new_labels_form << labeler_hash[x][y][z][yaw][v1][v2] << "\n" << std::flush;
-                        }
-                    }
-                }
-            }
-        }
-    }
 }
 
 void EnvironmentCONTXYZYAW::GetSuccs(
