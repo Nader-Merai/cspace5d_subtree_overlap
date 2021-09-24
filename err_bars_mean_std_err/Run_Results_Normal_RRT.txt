@@ -1,0 +1,41 @@
+for mode in RRT
+do
+    for map in city island 
+    do 
+        for sgpair in 0 1 2 3
+        do
+            echo START MODE_MAP_SGPAIR: ${mode}_${map}_${sgpair}
+            ./xyzyaw ../../../map/map.cfg ../../../map/${map}/${map}.stl ../../../map/${map}/${map}_sg_${sgpair}.sg
+            echo END MODE_MAP_SGPAIR: ${mode}_${map}_${sgpair}
+        done
+    done
+    for map in mount_ball
+    do 
+        for sgpair in 0 1 2 3 4 6
+        do
+            echo START MODE_MAP_SGPAIR: ${mode}_${map}_${sgpair}
+            ./xyzyaw ../../../map/map.cfg ../../../map/${map}/${map}.stl ../../../map/${map}/${map}_sg_${sgpair}.sg
+            echo END MODE_MAP_SGPAIR: ${mode}_${map}_${sgpair}
+        done
+    done
+
+    for map in mount 
+    do 
+        for sgpair in 0 1 2 3 4 5 6 8
+        do
+            echo START MODE_MAP_SGPAIR: ${mode}_${map}_${sgpair}
+            ./xyzyaw ../../../map/map.cfg ../../../map/${map}/${map}.stl ../../../map/${map}/${map}_sg_${sgpair}.sg
+            echo END MODE_MAP_SGPAIR: ${mode}_${map}_${sgpair}
+        done
+    done
+
+    for map in mountcylinder 
+    do 
+        for sgpair in 0 1 2 5 6 7
+        do
+            echo START MODE_MAP_SGPAIR: ${mode}_${map}_${sgpair}
+            ./xyzyaw ../../../map/map.cfg ../../../map/${map}/${map}.stl ../../../map/${map}/${map}_sg_${sgpair}.sg
+            echo END MODE_MAP_SGPAIR: ${mode}_${map}_${sgpair}
+        done
+    done
+done > ../../err_bars_mean_std_err/RRT.txt

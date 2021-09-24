@@ -1,0 +1,3 @@
+cp Run_Results_Normal_AStar.txt Run_Results_Normal.txt ../lmp/build/
+cp Run_Results_Normal_RRT.txt ../RRT/build/
+chmod 777 ../lmp/build/Run_Results_Normal* ../RRT/build/Run_Results_Normal_RRT.txt
