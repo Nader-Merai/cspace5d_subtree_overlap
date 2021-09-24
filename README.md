@@ -36,3 +36,6 @@ In order to get the results, the following steps must be done:<br />
 -There you will find all the raw data.<br />
 -To reproduce the plots, Run: ./Make_Plot.txt<br />
 -To view the Average +- Standard Error statistics of a certain run, Run: python3 Average_STD ${path_to_raw_data_run}
+
+### IMPORTANT NOTE FOR RESULTS REPRODUCTION:
+prior to running AStar scripts (prior to running scripts with a suffix "AStar.txt"), you must go to ```lmp/contxyzyaw/include/contxyzyaw/environment_xyzyaw.h```, and change the value of PENALTY (which is defined at line 41) to 0 and recompile. DO NOT FORGET TO SET IT BACK TO 1 AND RECOMPILING AFTER THE SCRIPT FINISHES.
